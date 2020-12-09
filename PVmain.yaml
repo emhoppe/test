@@ -1,0 +1,32 @@
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: dbmain-pv
+  labels:
+    app: postgres
+    type: local
+spec:
+  storageClassName: dbmainclass
+  capacity:
+    storage: 2Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/var/data"
+
+---
+
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: dbmain-pv-claim
+  labels:
+    app: postgres
+spec:
+  storageClassName: dbmainclass
+  capacity:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi       

@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: db-replica
+  labels:
+    app: postgres
+spec:
+  #strategy:
+  #  type: Recreate
+  serviceName: "postgres"  
+  selector:
+    matchLabels:
+      app: postgres
+  template: 
+    metadata:
+      labels:
+        app: postgres
+        tier: postgreSQL    
+    spec:
+      containers:
+        - image: postgres:13.1-alpine
+          name: dbmain
+          envFrom:
+            - configMapRef:
+                name: dbconfigmain
+          ports:
+            - containerPort: 5432
+              name: dbmain
+          volumeMounts:
+            - name: dbmain
+              mountPath: /var/lib/postgresql/data
+      volumes:
+        - name: dbmain
+          persistentVolumeClaim:
+            claimName: dbmain-pv-claim
+      nodeSelector:
+        name: db-pool
+
+

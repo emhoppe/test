@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: dbconfigreplica
+  labels:
+    app: postgres
+data:
+  POSTGRES_DB: dbmain
+  POSTGRES_USER: admin
+  POSTGRES_PASSWORD: teste123
+
+  
