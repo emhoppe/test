@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: db-main
+  labels:
+    app: postgres
+spec:
+  serviceName: "dbmain"
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres
+  template: 
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      containers:
+      - name: dbmain
+        image: postgres
+        env:
+        - name: POSTGRES_DB
+          value: dbmain
+        - name: POSTGRES_USER
+          value: admin
+        - name: POSTGRES_PASSWORD
+          value: teste123
+        ports:
+        - containerPort: 5432
+          name: dbmain
+        #volumeMounts:
+        #- name: vdbmain
+        #  mountPath: /var/lib/postgresql/data
+      volumes:
+      - name: vdbmain
+        persistentVolumeClaim:
+          claimName: pvcdb-main
+      nodeSelector:
+        name: db-pool

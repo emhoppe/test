@@ -1,4 +1,4 @@
-Kubectl delete statefulset mynginx
-Kubectl delete statefulset flaskpy
+Kubectl delete deployment mynginx
+Kubectl delete deployment flaskpy
 kubectl delete svc connectsvc
-kubectl delete svc nginxlb
+kubectl delete ingress flasking
