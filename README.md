@@ -3,7 +3,7 @@ Os arquivos foram criados utilizando Docker Destop comParte 1m Windows 10 e Minu
 
 Criei os arquivos .bat para rodar facilmente os arquivos YAML que precisava, seja para remover ou criar a estrutura toda.
 
-A pasta Mynginx contém o docker file de montage do Nginx que eu ajustei
+A pasta Mynginx contém o docker file de montagem do Nginx que eu havia configurado antes de eu entender o uso com Ingress. Esta imagem agora não é mais necessaria, mas deixei como material extra do que eu havia feito.
 
 A pasta flask contém tudo que usei para testar Python e o flask e montar a imagem do Flask com o Docker para depois usar no Kubernetes
 Vários arquivos ali foram adicionados pelo venv então mantive.
@@ -41,3 +41,6 @@ Kubectl apply -f flask.yaml
 - Cria o flask com minha imagem
 Kubectl apply -f loadbalance.yaml
 - Cria o loadbalancer para oa acesso ao Nginx
+
+Para limpar a instalação usar os arquivos Limpa1.bat, limpa2.bat ou limpatudo.bat
+

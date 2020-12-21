@@ -1,38 +1,30 @@
-#kind: PersistentVolume
-#apiVersion: v1
-#metadata:
-#   name: pvdb-replica
-#   annotations:
-#     volume.beta.kubernetes.io/storage-class: dbclass
-#spec:
-#   accessModes:
-#     - ReadWriteOnce
-#   persistentVolumeReclaimPolicy: Retain  
-#   storageClassName: dbclass
-#   local:
-#     path: 'd:\\kube\volumes\replica'
-#   capacity:
-#     storage: 2Gi
-#   nodeAffinity:
-#    required:
-#      nodeSelectorTerms:
-#      - matchExpressions:
-#        - key: name
-#          operator: In
-#          values:
-#          - db-pool
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: dbreplica-pv
+  labels:
+    app: postgres
+    type: local
+spec:
+  storageClassName: dbreplicaclass
+  capacity:
+    storage: 2Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/var/data"
 ---
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: pvcdb-replica
+  name: dbreplica-pv-claim
   labels:
     app: postgres
 spec:
-  storageClassName: dbclass
+  storageClassName: dbreplicaclass
   capacity:
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 2Gi                    
+      storage: 2Gi             

@@ -19,21 +19,21 @@ spec:
     spec:
       containers:
         - image: postgres:13.1-alpine
-          name: dbmain
+          name: dbreplica
           envFrom:
             - configMapRef:
-                name: dbconfigmain
+                name: dbconfigreplica
           ports:
             - containerPort: 5432
-              name: dbmain
+              name: dbreplica
           volumeMounts:
-            - name: dbmain
+            - name: dbreplica
               mountPath: /var/lib/postgresql/data
       volumes:
-        - name: dbmain
+        - name: dbreplica
           persistentVolumeClaim:
-            claimName: dbmain-pv-claim
+            claimName: dbreplica-pv-claim
       nodeSelector:
-        name: db-pool
+        name: app-pool
 
 

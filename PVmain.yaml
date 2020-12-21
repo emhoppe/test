@@ -13,9 +13,7 @@ spec:
     - ReadWriteOnce
   hostPath:
     path: "/var/data"
-
 ---
-
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
