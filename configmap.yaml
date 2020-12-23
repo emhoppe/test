@@ -3,7 +3,7 @@ kind: ConfigMap
 metadata:
   name: dbconfigmain
   labels:
-    app: postgres
+    tier: postgresMain
 data:
   POSTGRES_DB: dbmain
   POSTGRES_USER: admin
@@ -14,7 +14,7 @@ kind: ConfigMap
 metadata:
   name: dbconfigreplica
   labels:
-    app: postgres
+    tier: postgresReplica
 data:
   POSTGRES_DB: dbreplica
   POSTGRES_USER: admin

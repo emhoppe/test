@@ -5,3 +5,5 @@ kubectl delete pvc dbmain-pv-claim
 kubectl delete pv dbreplica-pv
 kubectl delete pv dbmain-pv
 kubectl delete svc postgres
+kubectl delete configmap dbconfigmain
+kubectl delete configmap dbconfigreplica

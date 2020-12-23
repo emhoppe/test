@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pod1
+  labels:
+    app: postgres
+spec:
+  selector:
+    matchLabels:
+      app: postgres
+  template: 
+    metadata:
+      labels:
+        app: postgres
+        tier: postgreSQL    
+    spec:
+      containers:
+        - image: nginx
+          name: nginx
+          envFrom:
+            - configMapRef:
+                name: dbconfigmain
+          ports:
+            - containerPort: 5432
+              name: dbmain
+          volumeMounts:
+            - name: dbmain
+              mountPath: /var/lib/postgresql/data
+      volumes:
+        - name: dbmain
+          persistentVolumeClaim:
+            claimName: dbmain-pv-claim
+      nodeSelector:
+        name: app-pool

@@ -3,7 +3,7 @@ apiVersion: v1
 metadata:
   name: dbmain-pv
   labels:
-    app: postgres
+    tier: postgresMain
     type: local
 spec:
   storageClassName: dbmainclass
@@ -19,7 +19,7 @@ apiVersion: v1
 metadata:
   name: dbmain-pv-claim
   labels:
-    app: postgres
+    tier: postgresMain
 spec:
   storageClassName: dbmainclass
   capacity:

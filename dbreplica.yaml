@@ -15,10 +15,10 @@ spec:
     metadata:
       labels:
         app: postgres
-        tier: postgreSQL    
+        tier: postgresReplica    
     spec:
       containers:
-        - image: postgres:13.1-alpine
+        - image: postgres:13.1
           name: dbreplica
           envFrom:
             - configMapRef:

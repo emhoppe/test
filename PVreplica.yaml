@@ -3,7 +3,7 @@ apiVersion: v1
 metadata:
   name: dbreplica-pv
   labels:
-    app: postgres
+    tier: postgresReplica
     type: local
 spec:
   storageClassName: dbreplicaclass
@@ -12,14 +12,14 @@ spec:
   accessModes:
     - ReadWriteOnce
   hostPath:
-    path: "/var/data"
+    path: "/var/data2"
 ---
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
   name: dbreplica-pv-claim
   labels:
-    app: postgres
+    tier: postgresReplica
 spec:
   storageClassName: dbreplicaclass
   capacity:
