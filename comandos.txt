@@ -1,0 +1,10 @@
+pg_basebackup -h db-main-0.postgres.default.svc.cluster.local -U replicator -p 5432 -D $PGDATA -Fp -Xs -P -R
+
+$ psql -c "SELECT pg_start_backup('label', true)"
+$ rsync -ac ${PGDATA}/ standby:/srv/pgsql/standby/ --exclude postmaster.pid
+$ psql -c "SELECT pg_stop_backup()"
+pg_ctl stop/start
+
+psql -U admin -d dbmain -c "select pg_reload_conf()"
+
+psql -U admin -d dbmain -x -c "select * from pg_stat_replication"

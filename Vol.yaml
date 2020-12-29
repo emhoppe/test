@@ -1,0 +1,44 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: posttemp
+  labels:
+    app: postgres
+spec:
+  template: 
+    metadata:
+      labels:
+        app: postgres
+        tier: postgreSQL    
+    spec:
+      containers:
+        - image: postgres:13.1
+          name: posttemp
+          envFrom:
+            - configMapRef:
+                name: dbconfigmain
+          ports:
+            - containerPort: 5432
+              name: dbtemp
+          volumeMounts:
+            - name: dbmain
+              mountPath: /var/lib/postgresql/data
+            - name: dbreplica
+              mountPath: /var/lib/postgresql/data2
+          command: ["/bin/bash","-c"]
+          args: 
+            #- apt update -y;
+            #  apt upgrade -y;
+            - rm -r -f /var/lib/postgresql/backup/*;
+              pg_basebackup -h db-main-0.postgres.default.svc.cluster.local -U replicator -p 5432 -D /var/lib/postgresql/backup -Fp -Xs -P -R;
+              cp -r -f /var/lib/postgresql/backup/* /var/lib/postgresql/data2;
+      restartPolicy: Never
+      volumes:
+        - name: dbmain
+          persistentVolumeClaim:
+            claimName: dbmain-pv-claim
+        - name: dbreplica
+          persistentVolumeClaim:
+            claimName: dbreplica-pv-claim
+      nodeSelector:
+        name: app-pool

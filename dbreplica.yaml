@@ -18,7 +18,7 @@ spec:
         tier: postgresReplica    
     spec:
       containers:
-        - image: postgres:13.1
+        - image: emhoppe/mypostgres
           name: dbreplica
           envFrom:
             - configMapRef:
@@ -29,6 +29,10 @@ spec:
           volumeMounts:
             - name: dbreplica
               mountPath: /var/lib/postgresql/data
+          #command: ["/bin/bash","-c"]
+            #- ls /opt;
+              #cp /opt/postgresql.conf /var/lib/postgresql/data;
+              #exit;
       volumes:
         - name: dbreplica
           persistentVolumeClaim:
