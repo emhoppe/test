@@ -4,3 +4,4 @@ kubectl apply -f PVmain.yaml
 kubectl apply -f PVreplica.yaml
 Kubectl apply -f dbmain.yaml
 Kubectl apply -f dbreplica.yaml
+kubectl apply -f loadbalance.yaml

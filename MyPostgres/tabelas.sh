@@ -1,0 +1,1 @@
+psql -U admin -d dbmain -f /opt/SQL.sql

@@ -1,3 +1,7 @@
+cause they have some skille players
+
+pg_ctl -D /var/lib/postgresql/data -l logfile start
+
 pg_basebackup -h db-main-0.postgres.default.svc.cluster.local -U replicator -p 5432 -D $PGDATA -Fp -Xs -P -R
 
 $ psql -c "SELECT pg_start_backup('label', true)"
@@ -8,3 +12,16 @@ pg_ctl stop/start
 psql -U admin -d dbmain -c "select pg_reload_conf()"
 
 psql -U admin -d dbmain -x -c "select * from pg_stat_replication"
+
+kubectl exec db-main-0 -- /bin/bash /opt/pg_copyfile.sh
+
+kubectl exec db-main-0 -- /bin/bash /opt/tabelas.sh
+
+kubectl exec --stdin --tty db-replica-0 -- /bin/bash /opt/pg_backup.sh
+
+kubectl exec --stdin --tty db-replica-0 -- pg_ctl restart
+
+
+
+                      
+           

@@ -6,7 +6,6 @@ EXPOSE 5432
 
 # Adicionei algumas modificacoes para atualizar e testar conexoes
 RUN apt update && apt upgrade -y
-RUN apt install curl -y
 RUN apt install nano -y
 RUN apt install iputils-ping -y
 RUN apt install sudo -y

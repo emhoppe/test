@@ -5,6 +5,7 @@ metadata:
   labels:
     app: postgres
 spec:
+  ttlSecondsAfterFinished: 100  
   template: 
     metadata:
       labels:
@@ -25,13 +26,12 @@ spec:
               mountPath: /var/lib/postgresql/data
             - name: dbreplica
               mountPath: /var/lib/postgresql/data2
-          command: ["/bin/bash","-c"]
-          args: 
-            #- apt update -y;
-            #  apt upgrade -y;
-            - rm -r -f /var/lib/postgresql/backup/*;
-              pg_basebackup -h db-main-0.postgres.default.svc.cluster.local -U replicator -p 5432 -D /var/lib/postgresql/backup -Fp -Xs -P -R;
-              cp -r -f /var/lib/postgresql/backup/* /var/lib/postgresql/data2;
+          #command: ["/bin/bash","-c"]
+          #args: 
+          #  - rm -r -f /var/lib/postgresql/backup/*;
+          #    cp /opt/*.conf / 
+          #    pg_basebackup -h db-main-0.postgres.default.svc.cluster.local -U replicator -p 5432 -D /var/lib/postgresql/backup -Fp -Xs -P -R;
+          #    cp -r -f /var/lib/postgresql/backup/* /var/lib/postgresql/data2;
       restartPolicy: Never
       volumes:
         - name: dbmain

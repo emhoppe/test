@@ -25,6 +25,6 @@ def hello_there(name):
     else:
         clean_name = "amigo"
    
-    content = "Flask Container recebeu: " + clean_name + "! Hoje é: " + formatted_now + ". Este é o pod: " + hostname 
+    content = "Flask Container recebeu: " + clean_name + "! Data e hora: " + formatted_now + ". Este é o pod: " + hostname 
     return content
     

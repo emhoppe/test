@@ -34,6 +34,6 @@ spec:
           persistentVolumeClaim:
             claimName: dbmain-pv-claim
       nodeSelector:
-        name: app-pool
+        name: db-pool
 
 

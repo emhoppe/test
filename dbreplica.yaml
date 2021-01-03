@@ -30,6 +30,7 @@ spec:
             - name: dbreplica
               mountPath: /var/lib/postgresql/data
           #command: ["/bin/bash","-c"]
+          #args:
             #- ls /opt;
               #cp /opt/postgresql.conf /var/lib/postgresql/data;
               #exit;
@@ -38,6 +39,6 @@ spec:
           persistentVolumeClaim:
             claimName: dbreplica-pv-claim
       nodeSelector:
-        name: app-pool
+        name: db-pool
 
 
