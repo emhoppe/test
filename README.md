@@ -26,26 +26,36 @@ minikube minikube addons enable ingress
 
 kubectl apply -f CIPdb.yaml
 #Cria um serviço clusterIP
+
 kubectl apply -f configmap.yaml
 #Cria o config map
+
 kubectl apply -f PVmain.yaml
 #Cria o volume main
+
 kubectl apply -f PVreplica.yaml
 #Cria o volume replica
+
 Kubectl apply -f dbmain.yaml
 #Cria o Postgres Main
+
 Kubectl apply -f dbreplica.yaml
 #Cria o Postgres Replica
+
 kubectl apply -f loadbalance.yaml
 #Cria o serviço de loadbalancer
 
 
 #Parte2: 
-Rodar o arquvio parte2. bat ou os respectivos Yamls que estão listados nele:
+
+#Rodar o arquvio parte2. bat ou os respectivos Yamls que estão listados nele:
+
 Kubectl apply -f nginx.yaml
-#Cria o nginx com minha imagem
+#Cria o nginx 
+
 Kubectl apply -f flask.yaml
 #Cria o flask com minha imagem
+
 Kubectl apply -f ingres.yaml
 #Cria o Ingress que fará o encaminhamento ao flask/nginx
 
