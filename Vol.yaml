@@ -41,4 +41,4 @@ spec:
           persistentVolumeClaim:
             claimName: dbreplica-pv-claim
       nodeSelector:
-        name: app-pool
+        name: db-pool

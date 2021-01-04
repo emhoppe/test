@@ -29,11 +29,6 @@ spec:
           volumeMounts:
             - name: dbreplica
               mountPath: /var/lib/postgresql/data
-          #command: ["/bin/bash","-c"]
-          #args:
-            #- ls /opt;
-              #cp /opt/postgresql.conf /var/lib/postgresql/data;
-              #exit;
       volumes:
         - name: dbreplica
           persistentVolumeClaim:

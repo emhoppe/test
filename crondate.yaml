@@ -1,0 +1,25 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: crondate
+spec:
+  # de 2 em 2 minutos
+  schedule: "*/2 * * * *"
+  #2 jobs de histórico
+  successfulJobsHistoryLimit: 2
+  #2 jobs de falha no histórico
+  failedJobsHistoryLimit: 2
+  #Considera 4 minutos
+  startingDeadlineSeconds: 240
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: crondate
+            image: debian
+            command: ["/bin/bash","-c"]
+            args:
+              - echo "Data e Hora:";
+                date;
+          restartPolicy: OnFailure

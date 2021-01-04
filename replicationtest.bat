@@ -1,0 +1,1 @@
+kubectl exec db-main-0 -- psql -U admin -d dbmain -x -c "select * from pg_stat_replication"

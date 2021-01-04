@@ -1,0 +1,46 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: cronback
+spec:
+  #backup a cada 30 minutos
+  schedule: "*/2 * * * *"
+  #2 backups de histórico  
+  successfulJobsHistoryLimit: 2
+  #2 jobs de falha no histórico
+  failedJobsHistoryLimit: 2  
+  jobTemplate: 
+    spec:
+      template:  
+        spec:
+          containers:
+            - image: postgres:13.1
+              name: dbbackup
+              envFrom:
+                - configMapRef:
+                    name: dbconfigmain
+              ports:
+                - containerPort: 5432
+                  name: dbback
+              volumeMounts:
+                - name: dbmain
+                  mountPath: /var/lib/postgresql/data
+                - name: dbreplica
+                  mountPath: /var/lib/postgresql/data2
+              command: ["/bin/bash","-c"]
+              args: 
+                - mkdir /var/lib/postgresql/data2/backup;
+                  if find /var/lib/postgresql/data2/backup -mindepth 1 | read; then rm -f -r /var/lib/postgresql/data2/backup/*; fi;
+                  pg_basebackup -h db-main-0.postgres.default.svc.cluster.local -U replicator -p 5432 -D /var/lib/postgresql/data2/backup -v -Ft;
+                  echo "Backup realizado!"
+                  date;
+          restartPolicy: Never 
+          volumes:
+            - name: dbmain
+              persistentVolumeClaim:
+                claimName: dbmain-pv-claim
+            - name: dbreplica
+              persistentVolumeClaim:
+                claimName: dbreplica-pv-claim
+          nodeSelector:
+            name: db-pool
