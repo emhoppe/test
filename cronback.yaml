@@ -4,8 +4,8 @@ metadata:
   name: cronback
 spec:
   #backup a cada 30 minutos
-  schedule: "*/2 * * * *"
-  #2 backups de histórico  
+  schedule: "*/30 * * * *"
+  #2 jobs de histórico  
   successfulJobsHistoryLimit: 2
   #2 jobs de falha no histórico
   failedJobsHistoryLimit: 2  
