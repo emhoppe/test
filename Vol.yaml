@@ -1,3 +1,4 @@
+#Job utilitário para verificar e corrigir as bases durante os testes e em eventual falha.
 apiVersion: batch/v1
 kind: Job
 metadata:
