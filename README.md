@@ -21,6 +21,7 @@ minikube start --nodes 2 --vm-driver hyperv --hyperv-virtual-switch "Minikube"
 # Como não consigo dar nomes aos nodes uando o minikube os labels fazem a funcao e ficam associados corretamente através de selector posteriormente. Achei muito interessante a forma como o Kubernetes oferece isso:
 
 kubectl label nodes minikube name=db-pool
+
 kubectl label nodes minikube-m02 name=app-pool
 
 # Ingress
@@ -92,25 +93,44 @@ kubectl apply -f .\crondate.yaml
 
 # Uma vez tudo pronto e não sendo necessário manter basta executar o limpa tudo.bat
 Kubectl delete statefulset db-main
+
 Kubectl delete statefulset db-replica
+
 kubectl delete pvc dbreplica-pv-claim
+
 kubectl delete pvc dbmain-pv-claim
+
 kubectl delete pv dbreplica-pv
+
 kubectl delete pv dbmain-pv
+
 kubectl delete svc postgres
+
 kubectl delete svc postgreslb
+
 kubectl delete configmap dbconfigmain
+
 kubectl delete configmap dbconfigreplica
+
 Kubectl delete deployment mynginx
+
 Kubectl delete deployment flaskpy
+
 kubectl delete svc connectsvc
+
 kubectl delete ingress flasking
+
 kubectl delete cronjob cronback
+
 kubectl delete cronjob crondate
 
-# Como estamos lidando com volumes persistentes enquanto os nodes existirem os volumes ficam preservados. Fiz diversos testes de "deleção" e a não ser que forçadamente se apague o que está nos volumes, está garantido que fica preservado independente de qualquer falha ou mesmo da desmontagem com o bat de limpeza.
+# Como estamos lidando com volumes persistentes enquanto os nodes existirem os volumes ficam preservados. Fiz diversos testes de "deleção" e salvo forçadamente ser apagado o que está nos volumes, está garantido que fica preservado independente de qualquer falha ou mesmo da desmontagem com o bat de limpeza.
 
-# Observei que caso se apague toda a pasta $PGDATA manualmente o container será recriado zerado, ai sim perdendo as informações, mas o servidor voltará a sua operação. Tendo sido rodado o backup, ou tendo a replica ainda, tudo pode ser recuperado. Achei sensacional a forma e a agilidade disto.
+# Observei ainda que nesta situação onde se apague toda a pasta $PGDATA manualmente o container será recriado zerado, ai sim perdendo as informações, mas o servidor voltará a sua operação. Tendo sido rodado o backup, ou tendo a replica ainda, tudo pode ser recuperado. Achei sensacional a forma e a agilidade disto.
+
+# vol.yaml
+
+# é um job utilizatário que foi muito útil para intervenções e reparos durante todo o processo de aprendizado e domínio da configuração da replicação. Através dele pude acessar os volumes e ver o que estava certo/errado e arrumar quando "quebrava" o pod de replica principalmente em meus testes.
 
 # comandos.txt
 # Este arquivo é apenas uma referência com alguns comandos que utilizo durante o teste.
